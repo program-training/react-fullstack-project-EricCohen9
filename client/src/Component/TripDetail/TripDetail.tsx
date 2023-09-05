@@ -1,3 +1,4 @@
+import { BrowserRouter as Router, Route,Routes,Link } from 'react-router-dom';
 import { useEffect, useState, createContext } from "react";
 interface data {
   id: string;
@@ -9,4 +10,11 @@ interface data {
   price: string;
   image: string;
   activitis: string[];
+}
+export function TripDetail(){
+    return(
+        <div>
+        <Link to="/">kk</Link>
+        </div>
+    )
 }

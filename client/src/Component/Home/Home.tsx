@@ -5,7 +5,7 @@ import { List } from "../Data/Context";
 
 export function Home() {
   const [button, setButton] = useState<boolean>(false);
-  const [buttonRegis,setButtonRegis]=useState<boolean>(false)
+  const [buttonRegis, setButtonRegis] = useState<boolean>(false);
   const [div, setDiv] = useState<boolean>(false);
   const context = useContext(List);
   if (!context) return null;
@@ -40,15 +40,14 @@ export function Home() {
       console.error("Error while deleting trip:", error);
     }
   };
-  const handleClickRegistration=()=>{
-    setButtonRegis(!buttonRegis)
-    console.log(buttonRegis)
-  }
-  const handleClickLogin=()=>{
-    
-  }
+  const handleClickRegistration = () => {
+    setButtonRegis(!buttonRegis);
+    console.log(buttonRegis);
+  };
+  const handleClickLogin = () => {};
   const showAllDeatels = () => {
     setDiv(!div);
+    
   };
 
   return (
@@ -63,7 +62,7 @@ export function Home() {
                 key={singleTrip.id}
                 className="card"
                 onClick={showAllDeatels}
-              >
+              > 
                 {div && (
                   <div>
                     <p> {singleTrip.id}</p>
@@ -87,14 +86,14 @@ export function Home() {
                 <button onClick={() => handleDelete(singleTrip.id)}>
                   delete
                 </button>
-                <button>update</button>
+                <button >update</button>
               </div>
             ))}
           </div>
         )}
         <button onClick={handleClickRegistration}>Registration</button>
-        {buttonRegis && <div>fdygdg</div> }
-        
+        {buttonRegis && <div>fdygdg</div>}
+
         <button onClick={handleClickLogin}>Login</button>
       </div>
     </div>
