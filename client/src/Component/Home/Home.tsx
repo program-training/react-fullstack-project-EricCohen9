@@ -1,4 +1,3 @@
-
 import "./Home.css";
 import React, { createContext, useState, useContext } from "react";
 // import { ListProvider } from '../Data/Context';
@@ -6,9 +5,12 @@ import { List } from "../Data/Context";
 
 export function Home() {
   const [button, setButton] = useState<boolean>(false);
+  const [buttonRegis,setButtonRegis]=useState<boolean>(false)
+  const [div, setDiv] = useState<boolean>(false);
   const context = useContext(List);
   if (!context) return null;
   const { trip, setTrips } = context;
+  let { clickDelete, onClick } = context;
 
   const showingTrips = () => {
     console.log();
@@ -29,7 +31,8 @@ export function Home() {
       });
 
       if (response.ok) {
-        console.log("s")
+        console.log("s");
+        onClick(clickDelete + 1);
       } else {
         console.error("Failed to delete trip.");
       }
@@ -37,16 +40,45 @@ export function Home() {
       console.error("Error while deleting trip:", error);
     }
   };
+  const handleClickRegistration=()=>{
+    setButtonRegis(!buttonRegis)
+    console.log(buttonRegis)
+  }
+  const handleClickLogin=()=>{
+    
+  }
+  const showAllDeatels = () => {
+    setDiv(!div);
+  };
 
   return (
     <div>
       <h1>Welcome to Trip Manager {}</h1>
-      <div >
+      <div>
         <button onClick={handleClick}>All trips</button>
         {button && (
           <div className="father">
             {trip.map((singleTrip: any) => (
-              <div key={singleTrip.id} className="card">
+              <div
+                key={singleTrip.id}
+                className="card"
+                onClick={showAllDeatels}
+              >
+                {div && (
+                  <div>
+                    <p> {singleTrip.id}</p>
+                    <p>{singleTrip.name}</p>
+                    <img id="img" src={singleTrip.image} alt="picture"></img>
+                    <p>{singleTrip.startDate}</p>
+                    <p>{singleTrip.endDate}</p>
+                    <p>{singleTrip.destnetion}</p>
+                    <p>{singleTrip.description}</p>
+                    <p>{singleTrip.price}</p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                  </div>
+                )}
                 <p>Trip ID: {singleTrip.id}</p>
                 <p>Name: {singleTrip.name}</p>
                 <img id="img" src={singleTrip.image} alt="picture"></img>
@@ -60,9 +92,10 @@ export function Home() {
             ))}
           </div>
         )}
-        <button onClick={handleClick}>Registration</button>
-        {button ? <div></div> : <div></div>}
-        <button onClick={handleClick}>Login</button>
+        <button onClick={handleClickRegistration}>Registration</button>
+        {buttonRegis && <div>fdygdg</div> }
+        
+        <button onClick={handleClickLogin}>Login</button>
       </div>
     </div>
   );

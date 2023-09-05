@@ -7,14 +7,14 @@ interface data {
   endDate: string;
   description: string;
   price: string;
-  iimage: string;
+  image: string;
   activitis: string[];
 }
 interface UserContextType {
   trip: data | null;
   setTrips: React.Dispatch<React.SetStateAction<data | null>>;
+  clickDelete: number;
 }
-
 console.log("fjiwwijfwsf");
 interface UserContextProviderProps {
   children: React.ReactNode;
@@ -22,6 +22,7 @@ interface UserContextProviderProps {
 export const List = createContext<UserContextType | null>(null);
 export const ListProvider: React.FC<UserContextProviderProps> = (props) => {
   const [trip, setTrips] = useState<data | null>(null);
+  const [clickDelete, onClick] = useState<number>(0);
   useEffect(() => {
     const fetchItems = async () => {
       console.log("kk");
@@ -33,10 +34,12 @@ export const ListProvider: React.FC<UserContextProviderProps> = (props) => {
       setTrips(data);
     };
     fetchItems();
-  }, []);
+  }, [clickDelete]);
   return (
     <div>
-      <List.Provider value={{ trip, setTrips }}>{props.children}</List.Provider>
+      <List.Provider value={{ trip, setTrips, clickDelete, onClick }}>
+        {props.children}
+      </List.Provider>
     </div>
   );
 };
