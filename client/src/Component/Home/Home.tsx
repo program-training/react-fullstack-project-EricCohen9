@@ -3,8 +3,12 @@ import React, { createContext, useState, useContext } from "react";
 // import { ListProvider } from '../Data/Context';
 import { List } from "../Data/Context";
 import { Routs } from "../RouterContext/RouterContext";
+import { Token } from "../Token/Token";
 
 export function Home() {
+  const token1 = useContext(Token);
+  if (!token1) return null;
+  const { token, settoken } = token1;
   const [button, setButton] = useState<boolean>(false);
   const [buttonRegis, setButtonRegis] = useState<boolean>(false);
   const [div, setDiv] = useState<boolean>(false);
@@ -25,7 +29,7 @@ export function Home() {
   };
 
   const myHeaders = new Headers();
-  myHeaders.append("authorization", "test-token");
+  myHeaders.append("authorization", token);
 
   const handleDelete = async (id: number) => {
     try {
@@ -33,7 +37,9 @@ export function Home() {
         headers: myHeaders,
         method: "DELETE",
       });
-
+      if (token === null) {
+        alert("you need to log in");
+      }
       if (response.ok) {
         console.log("s");
         onClick(clickDelete + 1, () => setRouter({ name: "Home", id: 1 }));
@@ -64,25 +70,25 @@ export function Home() {
         {button && (
           <div className="father">
             {trip.map((singleTrip: any) => (
-              <div
-                key={singleTrip.id}
-                className="card">
-                <div  onClick={() =>
-                  setRouter({ name: "cardDeteles", id: singleTrip.id })
-                }>
-                <p>Trip ID: {singleTrip.id}</p>
-                <p>Name: {singleTrip.name}</p>
-                <img id="img" src={singleTrip.image} alt="picture"></img>
-                <p>from:{singleTrip.startDate}</p>
-                <p>until:{singleTrip.endDate}</p>
+              <div key={singleTrip.id} className="card">
+                <div
+                  onClick={() =>
+                    setRouter({ name: "cardDeteles", id: singleTrip.id })
+                  }
+                >
+                  <p>Trip ID: {singleTrip.id}</p>
+                  <p>Name: {singleTrip.name}</p>
+                  <img id="img" src={singleTrip.image} alt="picture"></img>
+                  <p>from:{singleTrip.startDate}</p>
+                  <p>until:{singleTrip.endDate}</p>
                 </div>
-                <div >
-                <button onClick={() => handleDelete(singleTrip.id)}>
-                  delete
-                </button>
-                <button onClick={() => setRouter({ name: "Update", id: 1 })}>
-                  update
-                </button>
+                <div>
+                  <button onClick={() => handleDelete(singleTrip.id)}>
+                    delete
+                  </button>
+                  <button onClick={() => setRouter({ name: "Update", id: 1 })}>
+                    update
+                  </button>
                 </div>
               </div>
             ))}
@@ -96,7 +102,9 @@ export function Home() {
         <button onClick={() => setRouter({ name: "Login", id: 1 })}>
           Login
         </button>
-        <button onClick={() => setRouter({ name: "NewTrip", id: 1 })}>new trip</button>
+        <button onClick={() => setRouter({ name: "NewTrip", id: 1 })}>
+          new trip
+        </button>
       </div>
     </div>
   );

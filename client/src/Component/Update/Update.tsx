@@ -1,8 +1,12 @@
 import { useEffect, useState, createContext,useContext } from "react";
 import { Routs } from "../RouterContext/RouterContext";
 import "./Update.css"
+import { Token } from "../Token/Token";
 
 export function Update(){
+    const token1 = useContext(Token);
+  if (!token1) return null;
+  const { token, settoken } = token1;
     const RouterContext1=useContext(Routs)
     if(!RouterContext1)return null
     const {router, setRouter}=RouterContext1
@@ -38,22 +42,22 @@ export function Update(){
             </form>
             <button onClick={async()=>{
                         const myHeaders = new Headers();
-                        myHeaders.append("authorization", "test-token");
-
+                        myHeaders.append("authorization",token);
+                        myHeaders.append("Content-Type", "application/json");
                         try {
                           const response = await fetch(`http://localhost:3000/api/trips/${id}`, {
                             headers: myHeaders,
                             method: "PUT",
                             body:JSON.stringify(data)
                           });
-                          console.log(response)
+                          console.log(data,"ll")
+                          if(token===null){
+                            alert("yo need to log in")
+                          }
                           if (response.ok) {
                             console.log("s");
                         } else {
                             console.error("Failed to delete trip.");
-                            {
-                              () => setRouter({ name: "Home", id: 1 });
-                            }
                           }
                         } catch (error) {
                           console.error("Error while deleting trip:", error);
