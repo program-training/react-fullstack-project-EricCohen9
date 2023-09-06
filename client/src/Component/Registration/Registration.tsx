@@ -1,6 +1,7 @@
+
 import { useEffect, useState, createContext,useContext } from "react";
 import { Routs } from "../RouterContext/RouterContext";
-export function Login(){
+export function Registration(){
     const[password,setpassword]=useState("")
     const[email,setemail]=useState("")
     const data={
@@ -10,6 +11,7 @@ export function Login(){
 const RouterContext1=useContext(Routs)
   if(!RouterContext1)return null
   const {router, setRouter}=RouterContext1
+
     return(
         <div>
             <input value={email} placeholder="email" onChange={(e)=>{setemail(e.target.value)}}></input>
@@ -20,7 +22,7 @@ const RouterContext1=useContext(Routs)
                         myHeaders.append("Content-Type", "application/json");
 
                         try {
-                          const response = await fetch(`http://localhost:3000/api/auth/login`, {
+                          const response = await fetch(`http://localhost:3000/api/auth/register`, {
                             headers: myHeaders,
                             method: "POST",
                             body:JSON.stringify(data)
@@ -28,15 +30,15 @@ const RouterContext1=useContext(Routs)
                           });
                           console.log(response)
                           if (response.ok) {
-                            console.log("Status Code: 200 OK on successful login");
+                            console.log("Status Code: 201 Created on successful registration");
                         } else {
-                            console.error("Status Code: 401 Unauthorized");
+                            console.error("Status Code: 400 Bad Request if the user already exists");
                           }
                         } catch (error) {
                           console.error("Error while deleting trip:", error);
                         }
                       ;
-            }}>Login</button>
+            }}>Registration</button>
             <button onClick={()=>setRouter({name:"Home",id:1})}>back</button>
         </div>
     )
