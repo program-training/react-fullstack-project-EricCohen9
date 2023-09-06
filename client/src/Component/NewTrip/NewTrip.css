@@ -1,12 +1,14 @@
 #father{
     display: flex;
+    flex-direction: column
 }
-#regis{
+#input{
     border: 1px solid black;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    margin-bottom: 200px;
 }
-.input{
-    height: 20px;
+#send{
+    
 }
