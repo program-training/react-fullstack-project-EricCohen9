@@ -1,0 +1,16 @@
+.card{
+    border: 3px solid black;
+    border-radius: 30px;
+    width: 200px;
+    min-width: 200px;
+    margin: 10px;
+}
+#img{
+    height: 100px;
+    
+}
+.father{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
